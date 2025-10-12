@@ -10,7 +10,13 @@ A Flask-based web application that uses AI to automatically remove backgrounds f
 - Updated app.py to run on port 5000 with host 0.0.0.0
 - Configured workflow to run Flask app with gunicorn on port 5000
 - Set up deployment configuration for autoscale deployment
-- Verified application runs successfully without errors
+- **Updated from GitHub with new features:**
+  - Added Image Resizer tool with preset and custom dimensions
+  - Added Bulk Background Remover for processing multiple images
+  - Implemented ZIP download for bulk processed images
+  - Added navigation menu across all pages
+  - Enhanced monetization with additional ad placements
+  - Created resize.html and bulk.html templates
 
 ## Project Architecture
 
@@ -36,20 +42,28 @@ A Flask-based web application that uses AI to automatically remove backgrounds f
 ```
 
 ### Key Features
-- AI-powered background removal using rembg library
+- **Background Removal**: AI-powered background removal using rembg library
+- **Image Resizer**: Resize images with preset dimensions (Instagram, Facebook, HD, etc.) or custom sizes
+- **Bulk Processor**: Process multiple images at once and download as ZIP
 - Drag-and-drop file upload interface
 - Real-time image processing with preview
 - Automatic cleanup of files older than 1 hour
 - Responsive design with dark luxury theme
+- Navigation menu for easy access to all tools
 - SEO optimized with meta tags and sitemap
-- Google AdSense integration for monetization
+- Enhanced Google AdSense integration with multiple ad placements
 
 ### Routes
-- `GET /` - Main application page
+- `GET /` - Main background remover page
+- `GET /resize` - Image resizer tool page
+- `GET /bulk` - Bulk background remover page
 - `GET /about` - About page
 - `GET /sitemap.xml` - XML sitemap for SEO
 - `POST /remove-background` - API endpoint for background removal
+- `POST /resize-image` - API endpoint for image resizing
+- `POST /bulk-remove` - API endpoint for bulk background removal
 - `GET /download/<job_id>` - Download processed image
+- `GET /download-zip/<job_id>` - Download bulk processed images as ZIP
 - `GET /preview/<job_id>` - Preview processed image
 
 ## Running the Application

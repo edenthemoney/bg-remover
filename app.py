@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, send_file, jsonify
 from rembg import remove
 from PIL import Image
+from werkzeug.utils import secure_filename
 import io
 import os
 from pathlib import Path
 import uuid
 import time
+import zipfile
 
 app = Flask(__name__)
 
@@ -16,6 +18,14 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/resize')
+def resize_page():
+    return render_template('resize.html')
+
+@app.route('/bulk')
+def bulk_page():
+    return render_template('bulk.html')
 
 @app.route('/about')
 def about():
@@ -70,6 +80,95 @@ def preview(job_id):
     if file_path.exists():
         return send_file(file_path, mimetype='image/png')
     return jsonify({'error': 'File not found'}), 404
+
+@app.route('/resize-image', methods=['POST'])
+def resize_image():
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image provided'}), 400
+    
+    file = request.files['image']
+    width = request.form.get('width', type=int)
+    height = request.form.get('height', type=int)
+    
+    if not width or not height:
+        return jsonify({'error': 'Width and height required'}), 400
+    
+    try:
+        job_id = str(uuid.uuid4())
+        input_image = Image.open(file.stream)
+        
+        # Resize image
+        resized_image = input_image.resize((width, height), Image.Resampling.LANCZOS)
+        
+        # Save output
+        output_path = UPLOAD_DIR / f'{job_id}.png'
+        resized_image.save(output_path, 'PNG')
+        
+        return jsonify({
+            'success': True,
+            'job_id': job_id,
+            'message': f'Image resized to {width}x{height}!'
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/bulk-remove', methods=['POST'])
+def bulk_remove():
+    if 'images' not in request.files:
+        return jsonify({'error': 'No images provided'}), 400
+    
+    files = request.files.getlist('images')
+    if not files:
+        return jsonify({'error': 'No images selected'}), 400
+    
+    try:
+        job_id = str(uuid.uuid4())
+        job_dir = UPLOAD_DIR / job_id
+        job_dir.mkdir(exist_ok=True)
+        
+        processed_count = 0
+        for file in files:
+            if file.filename:
+                # Sanitize filename to prevent path traversal
+                safe_filename = secure_filename(file.filename)
+                if not safe_filename:
+                    continue
+                
+                # Process each image
+                input_image = Image.open(file.stream)
+                output_image = remove(input_image)
+                
+                # Save with sanitized filename
+                output_path = job_dir / f'nobg_{safe_filename}'
+                
+                # Ensure path is within job directory (security check)
+                if not output_path.resolve().is_relative_to(job_dir.resolve()):
+                    continue
+                
+                output_image.save(output_path, 'PNG')
+                processed_count += 1
+        
+        # Create ZIP file
+        zip_path = UPLOAD_DIR / f'{job_id}.zip'
+        with zipfile.ZipFile(zip_path, 'w') as zipf:
+            for file_path in job_dir.glob('*'):
+                zipf.write(file_path, file_path.name)
+        
+        return jsonify({
+            'success': True,
+            'job_id': job_id,
+            'count': processed_count,
+            'message': f'Processed {processed_count} images!'
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/download-zip/<job_id>')
+def download_zip(job_id):
+    zip_path = UPLOAD_DIR / f'{job_id}.zip'
+    if zip_path.exists():
+        return send_file(zip_path, as_attachment=True, download_name='bulk-backgrounds-removed.zip')
+    return jsonify({'error': 'ZIP file not found'}), 404
 
 # Cleanup old files (older than 1 hour)
 def cleanup_old_files():

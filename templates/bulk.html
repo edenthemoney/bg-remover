@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Background Remover - Remove Backgrounds from Multiple Images | Batch Processing</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free bulk background remover. Remove backgrounds from multiple images at once. Batch process photos, download as ZIP. No signup, unlimited images. Best free alternative to Canva bulk remover.">
+    <meta name="keywords" content="bulk background remover, batch background remover, remove background multiple images, bulk remove bg, batch image processing, multiple background removal, bulk photo editor, batch remove background, free bulk bg remover">
+    <meta name="author" content="Free BG Remover">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Bulk Background Remover - Batch Process Images">
+    <meta property="og:description" content="Remove backgrounds from multiple images at once. Free bulk processing, download as ZIP. No limits!">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Bulk Background Remover Tool">
+    <meta property="twitter:description" content="Batch remove backgrounds from multiple images. Free and unlimited.">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5331539730424594"
+         crossorigin="anonymous"></script>
+    
+    <!-- AdSense Auto Ads -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-5331539730424594",
+            enable_page_level_ads: true,
+            overlays: {bottom: true}
+        });
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            transition: all 0.3s;
+        }
+
+        .nav a:hover, .nav a.active {
+            background: rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(45, 45, 45, 0.95) 0%, rgba(55, 55, 55, 0.95) 100%);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(99, 102, 241, 0.5);
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 3em;
+            text-align: center;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #ddd;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .upload-area {
+            border: 3px dashed rgba(99, 102, 241, 0.5);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            background: rgba(99, 102, 241, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 30px 0;
+        }
+
+        .upload-area:hover {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .file-list {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            display: none;
+        }
+
+        .file-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress {
+            margin: 20px 0;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .ad-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .container { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Ad -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-5331539730424594"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <a href="/">🎨 Background Remover</a>
+        <a href="/resize">📐 Image Resizer</a>
+        <a href="/bulk" class="active">📦 Bulk Processor</a>
+    </div>
+
+    <div class="container">
+        <h1>📦 Bulk Background Remover</h1>
+        <p class="subtitle">Remove backgrounds from multiple images at once • Free • Download as ZIP</p>
+
+        <!-- Sticky Ad -->
+        <div class="ad-container" style="position: sticky; top: 20px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <div style="font-size: 4em; margin-bottom: 20px;">📸📸📸</div>
+            <div style="font-size: 1.3em; font-weight: 600; margin-bottom: 10px;">Click to upload multiple images</div>
+            <div style="color: #aaa; font-size: 0.9em;">Select multiple files at once • JPG, PNG, WEBP</div>
+            <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+        </div>
+
+        <div class="file-list" id="fileList">
+            <h3 style="color: #6366f1; margin-bottom: 15px;">Selected Files:</h3>
+            <div id="fileItems"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" id="processBtn">Process All Images</button>
+            </div>
+        </div>
+
+        <!-- Mid-Content Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="fluid"
+                 data-ad-layout="in-article"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <div class="progress" id="progress">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <div id="status" style="text-align: center; margin-top: 15px; color: #6366f1;"></div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" id="downloadBtn" style="display: none;">Download ZIP File</button>
+        </div>
+
+        <!-- Processing Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="autorelaxed"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- SEO Content -->
+        <div style="margin-top: 50px; padding: 30px; background: rgba(99, 102, 241, 0.05); border-radius: 15px; border: 1px solid rgba(99, 102, 241, 0.3);">
+            <h2 style="color: #6366f1; font-size: 1.8em; margin-bottom: 20px;">Best Free Bulk Background Remover</h2>
+            <p style="color: #ccc; line-height: 1.8; margin-bottom: 15px;">
+                Need to <strong style="color: #FFD700;">remove backgrounds from multiple images</strong>? Our free bulk background remover lets you process unlimited photos at once. Perfect for e-commerce, product photography, and batch editing. Unlike Canva which limits bulk processing, our <strong style="color: #FFD700;">batch background remover</strong> is 100% free with no limits!
+            </p>
+            <p style="color: #ccc; line-height: 1.8; margin-bottom: 15px;">
+                <strong style="color: #8b5cf6;">Upload multiple images</strong>, process them all with one click, and download as a convenient ZIP file. Our AI-powered <strong style="color: #FFD700;">bulk remove background tool</strong> maintains quality while processing dozens of images simultaneously.
+            </p>
+            <p style="color: #ccc; line-height: 1.8;">
+                <strong style="color: #6366f1;">Why choose our bulk background remover?</strong> Unlimited images, instant batch processing, ZIP download, no watermarks, and completely free. The best Canva alternative for bulk background removal!
+            </p>
+        </div>
+
+        <!-- Pre-Footer Ad -->
+        <div class="ad-container" style="margin-top: 40px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 60px; color: #888; font-size: 0.9em;">
+        <p>&copy; 2025 Free Image Tools | <a href="/" style="color: #6366f1;">Home</a> | <a href="/about" style="color: #6366f1;">About</a></p>
+        <p style="margin-top: 10px;">Free forever • No signup required • No watermarks</p>
+    </footer>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const fileItems = document.getElementById('fileItems');
+        const processBtn = document.getElementById('processBtn');
+        const progress = document.getElementById('progress');
+        const progressFill = document.getElementById('progressFill');
+        const status = document.getElementById('status');
+        const downloadBtn = document.getElementById('downloadBtn');
+        let selectedFiles = [];
+        let currentJobId = null;
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            selectedFiles = Array.from(e.target.files);
+            if (selectedFiles.length > 0) {
+                displayFiles();
+                fileList.style.display = 'block';
+            }
+        });
+
+        function displayFiles() {
+            fileItems.innerHTML = '';
+            selectedFiles.forEach((file, index) => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                div.innerHTML = `
+                    <span>${file.name}</span>
+                    <span style="color: #6366f1;">${(file.size / 1024).toFixed(1)} KB</span>
+                `;
+                fileItems.appendChild(div);
+            });
+        }
+
+        processBtn.addEventListener('click', async () => {
+            if (selectedFiles.length === 0) return;
+
+            processBtn.disabled = true;
+            progress.style.display = 'block';
+            status.textContent = '🔄 Processing images...';
+
+            const formData = new FormData();
+            selectedFiles.forEach(file => {
+                formData.append('images', file);
+            });
+
+            try {
+                const response = await fetch('/bulk-remove', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentJobId = data.job_id;
+                    progressFill.style.width = '100%';
+                    progressFill.textContent = '100%';
+                    status.textContent = `✅ Processed ${data.count} images successfully!`;
+                    downloadBtn.style.display = 'inline-block';
+                } else {
+                    status.textContent = '❌ Error: ' + data.error;
+                }
+            } catch (error) {
+                status.textContent = '❌ Error processing images';
+                console.error(error);
+            } finally {
+                processBtn.disabled = false;
+            }
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            if (currentJobId) {
+                window.location.href = `/download-zip/${currentJobId}`;
+            }
+        });
+    </script>
+</body>
+</html>

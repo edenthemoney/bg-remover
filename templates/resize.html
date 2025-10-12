@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Image Resizer - Resize Photos Online | Bulk Image Resize Tool</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free online image resizer. Resize photos, compress images, and batch resize multiple images instantly. No signup, no watermarks. Best free alternative to Canva image resizer.">
+    <meta name="keywords" content="image resizer, resize image, resize photo, photo resizer, bulk image resizer, batch resize images, compress image, image resize tool, free image resizer, online image resizer, resize image online free, picture resizer, photo resize tool">
+    <meta name="author" content="Free BG Remover">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Free Image Resizer - Resize Photos Online">
+    <meta property="og:description" content="Resize images instantly with our free online tool. Batch resize, compress, and optimize photos. No signup required!">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Free Image Resizer Tool">
+    <meta property="twitter:description" content="Resize and compress images online for free. Batch processing available.">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5331539730424594"
+         crossorigin="anonymous"></script>
+    
+    <!-- AdSense Auto Ads -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-5331539730424594",
+            enable_page_level_ads: true,
+            overlays: {bottom: true}
+        });
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            transition: all 0.3s;
+        }
+
+        .nav a:hover, .nav a.active {
+            background: rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(45, 45, 45, 0.95) 0%, rgba(55, 55, 55, 0.95) 100%);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(99, 102, 241, 0.5);
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 3em;
+            text-align: center;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #ddd;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .size-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .size-btn {
+            background: rgba(99, 102, 241, 0.2);
+            border: 2px solid rgba(99, 102, 241, 0.4);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .size-btn:hover {
+            background: rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .custom-size {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        input[type="number"] {
+            background: rgba(30, 30, 30, 0.8);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        .upload-area {
+            border: 3px dashed rgba(99, 102, 241, 0.5);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            background: rgba(99, 102, 241, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 30px 0;
+        }
+
+        .upload-area:hover {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        .preview {
+            display: none;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .preview img {
+            max-width: 100%;
+            border-radius: 15px;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .ad-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .container { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Ad -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-5331539730424594"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <a href="/">🎨 Background Remover</a>
+        <a href="/resize" class="active">📐 Image Resizer</a>
+        <a href="/bulk">📦 Bulk Processor</a>
+    </div>
+
+    <div class="container">
+        <h1>📐 Free Image Resizer</h1>
+        <p class="subtitle">Resize images instantly • Free • No signup • No watermarks</p>
+
+        <!-- Sticky Ad -->
+        <div class="ad-container" style="position: sticky; top: 20px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <h3 style="color: #6366f1; margin-top: 30px;">Quick Sizes:</h3>
+        <div class="size-options">
+            <button class="size-btn" onclick="setSize(1920, 1080)">1920x1080 (Full HD)</button>
+            <button class="size-btn" onclick="setSize(1280, 720)">1280x720 (HD)</button>
+            <button class="size-btn" onclick="setSize(800, 600)">800x600</button>
+            <button class="size-btn" onclick="setSize(640, 480)">640x480</button>
+            <button class="size-btn" onclick="setSize(1080, 1080)">1080x1080 (Instagram)</button>
+            <button class="size-btn" onclick="setSize(1200, 630)">1200x630 (Facebook)</button>
+        </div>
+
+        <h3 style="color: #6366f1; margin-top: 30px;">Custom Size:</h3>
+        <div class="custom-size">
+            <input type="number" id="width" placeholder="Width (px)" value="800">
+            <input type="number" id="height" placeholder="Height (px)" value="600">
+        </div>
+
+        <!-- Mid-Content Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="fluid"
+                 data-ad-layout="in-article"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <div style="font-size: 4em; margin-bottom: 20px;">📸</div>
+            <div style="font-size: 1.3em; font-weight: 600; margin-bottom: 10px;">Click to upload image</div>
+            <div style="color: #aaa; font-size: 0.9em;">Supports JPG, PNG, WEBP</div>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+        </div>
+
+        <div id="status" style="text-align: center; margin: 20px 0; color: #6366f1;"></div>
+
+        <div class="preview" id="preview">
+            <h3 style="color: #6366f1; margin-bottom: 15px;">Resized Image:</h3>
+            <img id="previewImg" alt="Resized">
+            <div style="margin-top: 20px;">
+                <button class="btn" id="downloadBtn">Download Resized Image</button>
+            </div>
+        </div>
+
+        <!-- Bottom Ad -->
+        <div class="ad-container" style="margin-top: 40px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="autorelaxed"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- SEO Content -->
+        <div style="margin-top: 50px; padding: 30px; background: rgba(99, 102, 241, 0.05); border-radius: 15px; border: 1px solid rgba(99, 102, 241, 0.3);">
+            <h2 style="color: #6366f1; font-size: 1.8em; margin-bottom: 20px;">Best Free Image Resizer Online</h2>
+            <p style="color: #ccc; line-height: 1.8; margin-bottom: 15px;">
+                Need to <strong style="color: #FFD700;">resize images online</strong>? Our free image resizer tool lets you resize photos instantly without losing quality. Perfect for social media, websites, and email. Unlike Canva which charges for advanced features, our <strong style="color: #FFD700;">photo resizer</strong> is 100% free forever!
+            </p>
+            <p style="color: #ccc; line-height: 1.8; margin-bottom: 15px;">
+                <strong style="color: #8b5cf6;">Quick resize presets</strong> for Instagram (1080x1080), Facebook (1200x630), Full HD (1920x1080), and more. Or use custom dimensions for exact sizing. Our <strong style="color: #FFD700;">image resize tool</strong> maintains image quality while reducing file size.
+            </p>
+            <p style="color: #ccc; line-height: 1.8;">
+                <strong style="color: #6366f1;">Why choose our free image resizer?</strong> Instant processing, no watermarks, no signup required, and unlimited resizes. Resize images for free online with the best Canva alternative!
+            </p>
+        </div>
+
+        <!-- Pre-Footer Ad -->
+        <div class="ad-container" style="margin-top: 40px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 60px; color: #888; font-size: 0.9em;">
+        <p>&copy; 2025 Free Image Tools | <a href="/" style="color: #6366f1;">Home</a> | <a href="/about" style="color: #6366f1;">About</a></p>
+        <p style="margin-top: 10px;">Free forever • No signup required • No watermarks</p>
+    </footer>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const status = document.getElementById('status');
+        const preview = document.getElementById('preview');
+        const previewImg = document.getElementById('previewImg');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const widthInput = document.getElementById('width');
+        const heightInput = document.getElementById('height');
+        let currentJobId = null;
+
+        function setSize(w, h) {
+            widthInput.value = w;
+            heightInput.value = h;
+        }
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) processImage(file);
+        });
+
+        async function processImage(file) {
+            const width = parseInt(widthInput.value);
+            const height = parseInt(heightInput.value);
+
+            if (!width || !height) {
+                status.textContent = '❌ Please enter width and height';
+                return;
+            }
+
+            status.textContent = '🔄 Resizing image...';
+            preview.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('width', width);
+            formData.append('height', height);
+
+            try {
+                const response = await fetch('/resize-image', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentJobId = data.job_id;
+                    previewImg.src = `/preview/${data.job_id}`;
+                    preview.style.display = 'block';
+                    status.textContent = `✅ ${data.message}`;
+                } else {
+                    status.textContent = '❌ Error: ' + data.error;
+                }
+            } catch (error) {
+                status.textContent = '❌ Error resizing image';
+                console.error(error);
+            }
+        }
+
+        downloadBtn.addEventListener('click', () => {
+            if (currentJobId) {
+                window.location.href = `/download/${currentJobId}`;
+            }
+        });
+    </script>
+</body>
+</html>
