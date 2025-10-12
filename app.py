@@ -45,6 +45,9 @@ def remove_background():
         return jsonify({'error': 'No image selected'}), 400
     
     try:
+        # Cleanup old files
+        cleanup_old_files()
+        
         # Generate unique ID
         job_id = str(uuid.uuid4())
         
@@ -94,6 +97,9 @@ def resize_image():
         return jsonify({'error': 'Width and height required'}), 400
     
     try:
+        # Cleanup old files
+        cleanup_old_files()
+        
         job_id = str(uuid.uuid4())
         input_image = Image.open(file.stream)
         
@@ -122,6 +128,9 @@ def bulk_remove():
         return jsonify({'error': 'No images selected'}), 400
     
     try:
+        # Cleanup old files
+        cleanup_old_files()
+        
         job_id = str(uuid.uuid4())
         job_dir = UPLOAD_DIR / job_id
         job_dir.mkdir(exist_ok=True)
@@ -129,7 +138,7 @@ def bulk_remove():
         processed_count = 0
         for file in files:
             if file.filename:
-                # Sanitize filename to prevent path traversal
+                # Sanitize filename to prevent path traversal (SECURITY FIX)
                 safe_filename = secure_filename(file.filename)
                 if not safe_filename:
                     continue
@@ -173,9 +182,19 @@ def download_zip(job_id):
 # Cleanup old files (older than 1 hour)
 def cleanup_old_files():
     current_time = time.time()
+    # Clean up top-level PNG files
     for file_path in UPLOAD_DIR.glob('*.png'):
         if current_time - file_path.stat().st_mtime > 3600:  # 1 hour
             file_path.unlink()
+    # Clean up ZIP files
+    for file_path in UPLOAD_DIR.glob('*.zip'):
+        if current_time - file_path.stat().st_mtime > 3600:  # 1 hour
+            file_path.unlink()
+    # Clean up bulk processing job directories
+    for job_dir in UPLOAD_DIR.iterdir():
+        if job_dir.is_dir() and current_time - job_dir.stat().st_mtime > 3600:  # 1 hour
+            import shutil
+            shutil.rmtree(job_dir)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    app.run(host='0.0.0.0', port=5000)

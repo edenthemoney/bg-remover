@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Background Remover - AI Photo Background Eraser | Remove BG Online</title>
+    <title>Free Background Remover - AI Photo Background Eraser | FreePhotoTools.xyz</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Free AI background remover. Remove photo backgrounds instantly with our free online tool. No signup, no watermarks. Better than Canva - 100% free forever!">
+    <meta name="description" content="Free AI background remover at FreePhotoTools.xyz. Remove photo backgrounds instantly with our free online tool. No signup, no watermarks. Better than Canva - 100% free forever!">
     <meta name="keywords" content="remove background, background remover, remove bg, free background remover, photo background remover, erase background, background eraser, remove photo background, ai background remover, canva alternative free">
-    <meta name="author" content="Free BG Remover">
+    <meta name="author" content="FreePhotoTools.xyz">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph -->
@@ -289,6 +289,41 @@
             font-size: 0.85em;
         }
 
+        .mode-btn {
+            background: rgba(99, 102, 241, 0.2);
+            border: 2px solid rgba(99, 102, 241, 0.4);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 10px;
+        }
+
+        .mode-btn:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-color: #6366f1;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .file-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
         footer {
             text-align: center;
             margin-top: 60px;
@@ -337,11 +372,10 @@
     <div style="max-width: 1200px; margin: 0 auto 30px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
         <a href="/" style="color: #fff; text-decoration: none; padding: 10px 20px; background: rgba(99, 102, 241, 0.4); border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.4);">🎨 Background Remover</a>
         <a href="/resize" style="color: #fff; text-decoration: none; padding: 10px 20px; background: rgba(99, 102, 241, 0.2); border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.4); transition: all 0.3s;">📐 Image Resizer</a>
-        <a href="/bulk" style="color: #fff; text-decoration: none; padding: 10px 20px; background: rgba(99, 102, 241, 0.2); border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.4); transition: all 0.3s;">📦 Bulk Processor</a>
     </div>
 
     <div class="container">
-        <h1>🎨 Free Background Remover</h1>
+        <h1>🎨 FreePhotoTools - Background Remover</h1>
         <p class="subtitle">Remove photo backgrounds instantly with AI • 100% Free • No Signup • No Watermarks</p>
 
         <!-- Sidebar Ad (Sticky) -->
@@ -374,11 +408,37 @@
             </div>
         </div>
 
-        <div class="upload-area" id="uploadArea">
-            <div class="upload-icon">📸</div>
-            <div class="upload-text">Click to upload or drag & drop</div>
-            <div class="upload-subtext">Supports JPG, PNG, WEBP • Max 10MB</div>
-            <input type="file" id="fileInput" accept="image/*">
+        <!-- Mode Toggle -->
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="mode-btn active" id="singleModeBtn" onclick="switchMode('single')">📸 Single Image</button>
+            <button class="mode-btn" id="bulkModeBtn" onclick="switchMode('bulk')">📦 Bulk Processing</button>
+        </div>
+
+        <!-- Single Mode -->
+        <div id="singleMode">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📸</div>
+                <div class="upload-text">Click to upload or drag & drop</div>
+                <div class="upload-subtext">Supports JPG, PNG, WEBP • Max 10MB</div>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+        </div>
+
+        <!-- Bulk Mode -->
+        <div id="bulkMode" style="display: none;">
+            <div class="upload-area" id="bulkUploadArea">
+                <div class="upload-icon">📸📸📸</div>
+                <div class="upload-text">Click to upload multiple images</div>
+                <div class="upload-subtext">Select multiple files • JPG, PNG, WEBP</div>
+                <input type="file" id="bulkFileInput" accept="image/*" multiple>
+            </div>
+            <div class="file-list" id="fileList" style="display: none; margin: 20px 0; padding: 20px; background: rgba(30, 30, 30, 0.8); border-radius: 15px;">
+                <h3 style="color: #6366f1; margin-bottom: 15px;">Selected Files:</h3>
+                <div id="fileItems"></div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" id="processBulkBtn">Process All Images</button>
+                </div>
+            </div>
         </div>
 
         <div id="status" class="status"></div>
@@ -424,18 +484,18 @@
         </div>
 
         <!-- Download Button Ad -->
-        <div class="ad-container" style="margin-top: 30px;">
+        <div class="ad-container" style="margin: 30px 0;">
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-5331539730424594"
-                 data-ad-format="fluid"
-                 data-ad-layout="in-article"></ins>
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
         </div>
 
-        <!-- Bottom Ad -->
+        <!-- Multiplex Ad (Grid Style - High CTR) -->
         <div class="ad-container" style="margin-top: 40px;">
             <ins class="adsbygoogle"
                  style="display:block"
@@ -459,6 +519,29 @@
                 <strong style="color: #6366f1;">Why choose our free background remover?</strong> Advanced AI technology, instant processing, high-quality results, and completely free with no limitations. Remove backgrounds from unlimited photos - no subscription required!
             </p>
         </div>
+
+        <!-- Pre-Footer Ad (High Visibility) -->
+        <div class="ad-container" style="margin-top: 40px; padding: 25px; background: rgba(60, 60, 60, 0.95); border-radius: 15px; border: 2px solid rgba(99, 102, 241, 0.4);">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Bottom Anchor Ad (Sticky Bottom - Very High Revenue) -->
+        <div class="ad-container" style="margin-top: 30px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="autorelaxed"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 
     <footer>
@@ -467,6 +550,31 @@
     </footer>
 
     <script>
+        // Mode switching
+        function switchMode(mode) {
+            const singleMode = document.getElementById('singleMode');
+            const bulkMode = document.getElementById('bulkMode');
+            const singleBtn = document.getElementById('singleModeBtn');
+            const bulkBtn = document.getElementById('bulkModeBtn');
+            const previewContainer = document.getElementById('previewContainer');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            if (mode === 'single') {
+                singleMode.style.display = 'block';
+                bulkMode.style.display = 'none';
+                singleBtn.classList.add('active');
+                bulkBtn.classList.remove('active');
+            } else {
+                singleMode.style.display = 'none';
+                bulkMode.style.display = 'block';
+                singleBtn.classList.remove('active');
+                bulkBtn.classList.add('active');
+                previewContainer.style.display = 'none';
+                downloadBtn.style.display = 'none';
+            }
+        }
+
+        // Single mode variables
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
         const status = document.getElementById('status');
@@ -476,6 +584,14 @@
         const resultPreview = document.getElementById('resultPreview');
         const downloadBtn = document.getElementById('downloadBtn');
         let currentJobId = null;
+
+        // Bulk mode variables
+        const bulkUploadArea = document.getElementById('bulkUploadArea');
+        const bulkFileInput = document.getElementById('bulkFileInput');
+        const fileList = document.getElementById('fileList');
+        const fileItems = document.getElementById('fileItems');
+        const processBulkBtn = document.getElementById('processBulkBtn');
+        let selectedFiles = [];
 
         uploadArea.addEventListener('click', () => fileInput.click());
 
@@ -551,6 +667,69 @@
         downloadBtn.addEventListener('click', () => {
             if (currentJobId) {
                 window.location.href = `/download/${currentJobId}`;
+            }
+        });
+
+        // Bulk mode handlers
+        bulkUploadArea.addEventListener('click', () => bulkFileInput.click());
+
+        bulkFileInput.addEventListener('change', (e) => {
+            selectedFiles = Array.from(e.target.files);
+            if (selectedFiles.length > 0) {
+                displayFiles();
+                fileList.style.display = 'block';
+            }
+        });
+
+        function displayFiles() {
+            fileItems.innerHTML = '';
+            selectedFiles.forEach((file, index) => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                div.innerHTML = `
+                    <span>${file.name}</span>
+                    <span style="color: #6366f1;">${(file.size / 1024).toFixed(1)} KB</span>
+                `;
+                fileItems.appendChild(div);
+            });
+        }
+
+        processBulkBtn.addEventListener('click', async () => {
+            if (selectedFiles.length === 0) return;
+
+            processBulkBtn.disabled = true;
+            status.textContent = `🔄 Processing ${selectedFiles.length} images...`;
+            spinner.style.display = 'block';
+
+            const formData = new FormData();
+            selectedFiles.forEach(file => {
+                formData.append('images', file);
+            });
+
+            try {
+                const response = await fetch('/bulk-remove', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentJobId = data.job_id;
+                    status.textContent = `✅ Processed ${data.count} images successfully!`;
+                    downloadBtn.style.display = 'inline-block';
+                    downloadBtn.onclick = () => {
+                        window.location.href = `/download-zip/${currentJobId}`;
+                    };
+                } else {
+                    status.textContent = '❌ Error: ' + data.error;
+                }
+            } catch (error) {
+                status.textContent = '❌ Error processing images';
+                console.error(error);
+            } finally {
+                spinner.style.display = 'none';
+                processBulkBtn.disabled = false;
             }
         });
     </script>
