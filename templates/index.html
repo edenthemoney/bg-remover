@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Background Remover - AI Photo Background Eraser | Remove BG Online</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free AI background remover. Remove photo backgrounds instantly with our free online tool. No signup, no watermarks. Better than Canva - 100% free forever!">
+    <meta name="keywords" content="remove background, background remover, remove bg, free background remover, photo background remover, erase background, background eraser, remove photo background, ai background remover, canva alternative free">
+    <meta name="author" content="Free BG Remover">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Free Background Remover - AI Photo Background Eraser">
+    <meta property="og:description" content="Remove photo backgrounds instantly with AI. 100% free, no signup, no watermarks. Better than Canva!">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Free Background Remover - AI Tool">
+    <meta property="twitter:description" content="Remove backgrounds from photos instantly. Free AI tool, no signup required.">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5331539730424594"
+         crossorigin="anonymous"></script>
+    
+    <!-- AdSense Auto Ads (Maximum Revenue) -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-5331539730424594",
+            enable_page_level_ads: true,
+            overlays: {bottom: true}
+        });
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --gold: #FFD700;
+            --dark: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 20px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(45, 45, 45, 0.95) 0%, rgba(55, 55, 55, 0.95) 100%);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.4),
+                0 0 0 1px rgba(99, 102, 241, 0.5),
+                inset 0 1px 0 rgba(255, 215, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 3em;
+            text-align: center;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientText 3s ease infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            color: #ddd;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .upload-area {
+            border: 3px dashed rgba(99, 102, 241, 0.5);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            background: rgba(99, 102, 241, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            color: #fff;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .upload-subtext {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .preview-container {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .preview-box {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .preview-box h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .preview-box img {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status {
+            text-align: center;
+            margin: 20px 0;
+            color: #fff;
+            font-size: 1.1em;
+        }
+
+        .spinner {
+            border: 4px solid rgba(99, 102, 241, 0.2);
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .ad-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(55, 55, 55, 0.9) 0%, rgba(45, 45, 45, 0.95) 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+            border-color: #6366f1;
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .feature-desc {
+            color: #bbb;
+            font-size: 0.85em;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #6366f1;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #8b5cf6;
+        }
+
+        @media (max-width: 768px) {
+            .preview-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Ad -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-5331539730424594"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="container">
+        <h1>🎨 Free Background Remover</h1>
+        <p class="subtitle">Remove photo backgrounds instantly with AI • 100% Free • No Signup • No Watermarks</p>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">Instant Results</div>
+                <div class="feature-desc">AI removes backgrounds in seconds</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-title">Precise Cutouts</div>
+                <div class="feature-desc">Perfect edges every time</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💎</div>
+                <div class="feature-title">100% Free</div>
+                <div class="feature-desc">No limits, no watermarks</div>
+            </div>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📸</div>
+            <div class="upload-text">Click to upload or drag & drop</div>
+            <div class="upload-subtext">Supports JPG, PNG, WEBP • Max 10MB</div>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div id="status" class="status"></div>
+        <div id="spinner" class="spinner" style="display: none;"></div>
+
+        <!-- Ad While Processing -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="fluid"
+                 data-ad-layout="in-article"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <div class="preview-container" id="previewContainer">
+            <div class="preview-box">
+                <h3>Original</h3>
+                <img id="originalPreview" alt="Original">
+            </div>
+            <div class="preview-box">
+                <h3>Background Removed</h3>
+                <img id="resultPreview" alt="Result">
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" id="downloadBtn" style="display: none;">Download Image</button>
+        </div>
+
+        <!-- Bottom Ad -->
+        <div class="ad-container" style="margin-top: 40px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5331539730424594"
+                 data-ad-format="autorelaxed"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- SEO Content -->
+        <div style="margin-top: 50px; padding: 30px; background: rgba(99, 102, 241, 0.05); border-radius: 15px; border: 1px solid rgba(99, 102, 241, 0.3);">
+            <h2 style="color: #6366f1; font-size: 1.8em; margin-bottom: 20px;">Best Free Background Remover Online - Better Than Canva!</h2>
+            <p style="color: #ccc; line-height: 1.8; margin-bottom: 15px;">
+                Looking for a <strong style="color: #FFD700;">free background remover</strong>? Our AI-powered tool removes photo backgrounds instantly - no signup, no watermarks, completely free! Unlike Canva which charges $10-15/month, our <strong style="color: #FFD700;">background eraser</strong> is 100% free forever.
+            </p>
+            <p style="color: #ccc; line-height: 1.8; margin-bottom: 15px;">
+                Perfect for <strong style="color: #8b5cf6;">product photos, portraits, logos, and more</strong>. Our AI background remover delivers professional results in seconds. Simply upload your image and watch the magic happen!
+            </p>
+            <p style="color: #ccc; line-height: 1.8;">
+                <strong style="color: #6366f1;">Why choose our free background remover?</strong> Advanced AI technology, instant processing, high-quality results, and completely free with no limitations. Remove backgrounds from unlimited photos - no subscription required!
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Free Background Remover | <a href="/about">About</a> | <a href="#">Privacy</a> | <a href="#">Terms</a></p>
+        <p style="margin-top: 10px;">Free forever • No signup required • No watermarks</p>
+    </footer>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const status = document.getElementById('status');
+        const spinner = document.getElementById('spinner');
+        const previewContainer = document.getElementById('previewContainer');
+        const originalPreview = document.getElementById('originalPreview');
+        const resultPreview = document.getElementById('resultPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
+        let currentJobId = null;
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#6366f1';
+            uploadArea.style.background = 'rgba(99, 102, 241, 0.15)';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = 'rgba(99, 102, 241, 0.5)';
+            uploadArea.style.background = 'rgba(99, 102, 241, 0.05)';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'rgba(99, 102, 241, 0.5)';
+            uploadArea.style.background = 'rgba(99, 102, 241, 0.05)';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                processImage(file);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                processImage(file);
+            }
+        });
+
+        async function processImage(file) {
+            // Show original preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // Show loading
+            status.textContent = '🎨 Removing background...';
+            spinner.style.display = 'block';
+            downloadBtn.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const response = await fetch('/remove-background', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentJobId = data.job_id;
+                    resultPreview.src = `/preview/${data.job_id}`;
+                    previewContainer.style.display = 'grid';
+                    status.textContent = '✅ Background removed successfully!';
+                    downloadBtn.style.display = 'inline-block';
+                } else {
+                    status.textContent = '❌ Error: ' + data.error;
+                }
+            } catch (error) {
+                status.textContent = '❌ Error processing image';
+                console.error(error);
+            } finally {
+                spinner.style.display = 'none';
+            }
+        }
+
+        downloadBtn.addEventListener('click', () => {
+            if (currentJobId) {
+                window.location.href = `/download/${currentJobId}`;
+            }
+        });
+    </script>
+</body>
+</html>
