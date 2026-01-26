@@ -31,9 +31,41 @@ def bulk_page():
 def about():
     return render_template('about.html')
 
+@app.route('/id-background-remover')
+def id_remover():
+    return render_template('id-remover.html')
+
+@app.route('/passport-photo-remover')
+def passport_remover():
+    return render_template('passport-remover.html')
+
+@app.route('/product-photo-remover')
+def product_remover():
+    return render_template('product-remover.html')
+
+@app.route('/avatar-maker')
+def avatar_maker():
+    return render_template('avatar-maker.html')
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
+
+@app.route('/blog/best-background-remover-tools')
+def blog_best_tools():
+    return render_template('blog-best-tools.html')
+
+@app.route('/blog/how-to-remove-background')
+def blog_how_to():
+    return render_template('blog-how-to.html')
+
 @app.route('/sitemap.xml')
 def sitemap():
     return render_template('sitemap.xml'), 200, {'Content-Type': 'application/xml'}
+
+@app.route('/robots.txt')
+def robots():
+    return render_template('robots.txt'), 200, {'Content-Type': 'text/plain'}
 
 @app.route('/remove-background', methods=['POST'])
 def remove_background():
