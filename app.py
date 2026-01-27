@@ -5,11 +5,10 @@ import io
 import os
 from pathlib import Path
 import uuid
-import time
-import zipfile
 
 app = Flask(__name__)
 
+# v2 - Updated sitemap
 # Lazy load rembg to avoid startup issues
 _rembg_remove = None
 
