@@ -56,6 +56,22 @@ def product_remover():
 def avatar_maker():
     return render_template('avatar-maker.html')
 
+@app.route('/image-compressor')
+def image_compressor():
+    return render_template('image-compressor.html')
+
+@app.route('/image-converter')
+def image_converter():
+    return render_template('image-converter.html')
+
+@app.route('/watermark-remover')
+def watermark_remover():
+    return render_template('watermark-remover.html')
+
+@app.route('/image-upscaler')
+def image_upscaler():
+    return render_template('image-upscaler.html')
+
 @app.route('/blog')
 def blog():
     return render_template('blog.html')

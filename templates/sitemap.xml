@@ -26,6 +26,26 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://freephototools.xyz/image-compressor</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://freephototools.xyz/image-converter</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://freephototools.xyz/watermark-remover</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://freephototools.xyz/image-upscaler</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://freephototools.xyz/resize</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
