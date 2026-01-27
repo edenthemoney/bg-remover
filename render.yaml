@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: bg-remover
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: "8080"
