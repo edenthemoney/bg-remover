@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, send_file, jsonify
-from rembg import remove
 from PIL import Image
 from werkzeug.utils import secure_filename
 import io
@@ -10,6 +9,16 @@ import time
 import zipfile
 
 app = Flask(__name__)
+
+# Lazy load rembg to avoid startup issues
+_rembg_remove = None
+
+def get_remove_function():
+    global _rembg_remove
+    if _rembg_remove is None:
+        from rembg import remove
+        _rembg_remove = remove
+    return _rembg_remove
 
 # Create uploads directory
 UPLOAD_DIR = Path('uploads')
@@ -87,7 +96,8 @@ def remove_background():
         input_image = Image.open(file.stream)
         
         # Remove background
-        output_image = remove(input_image)
+        remove_func = get_remove_function()
+        output_image = remove_func(input_image)
         
         # Save output
         output_path = UPLOAD_DIR / f'{job_id}.png'
