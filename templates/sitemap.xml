@@ -26,26 +26,6 @@
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://bg-remover-1.replit.app/image-compressor</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://bg-remover-1.replit.app/image-converter</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://bg-remover-1.replit.app/watermark-remover</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://bg-remover-1.replit.app/image-upscaler</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
         <loc>https://bg-remover-1.replit.app/resize</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
